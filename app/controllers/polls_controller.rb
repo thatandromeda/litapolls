@@ -1,12 +1,4 @@
 class PollsController < ApplicationController
-  def index
-    @polls = Poll.all
-  end
-
-  def new
-    @poll = Poll.new
-  end
-
   def create
     @poll = Poll.new(poll_params)
     if @poll.save
@@ -14,20 +6,6 @@ class PollsController < ApplicationController
       redirect_to polls_path
     else
       render 'new'
-    end
-  end
-
-  def edit
-    @poll = Poll.find_by_id(params[:id])
-  end
-
-  def update
-    @poll = Poll.find_by_id(params[:id])
-    if @poll.update_attributes(poll_params)
-      flash[:success] = 'Poll was updated!'
-      redirect_to polls_path
-    else
-      render 'edit'
     end
   end
 
@@ -39,6 +17,32 @@ class PollsController < ApplicationController
       flash[:warning] = 'Error destroying poll...'
     end
     redirect_to polls_path
+  end
+
+  def edit
+    @poll = Poll.find_by_id(params[:id])
+  end
+
+  def index
+    @polls = Poll.all
+  end
+
+  def new
+    @poll = Poll.new
+  end
+
+  def show
+    @poll = Poll.find_by_id(params[:id])
+  end
+
+  def update
+    @poll = Poll.find_by_id(params[:id])
+    if @poll.update_attributes(poll_params)
+      flash[:success] = 'Poll was updated!'
+      redirect_to polls_path
+    else
+      render 'edit'
+    end
   end
 
   private
